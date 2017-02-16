@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Neighborhood Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- jQuery minified js -->
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <!-- KOJS  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+
+    <!-- Latest compiled and minified bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="src/css/style.css">
+
+</head>
+<body>
+    <div class="row">
+        <div class='liveExample col-md-2'>
+            <form>
+                <input id="search" type="search" name="search" placeholder="Search for a location" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+            </form>
+            <p>Your items:</p>
+            <ul data-bind="foreach: items">
+                <li data-bind="text: name, click: showInfoWindowOfLocation"></li>
+            </ul>
+        </div>
+        <div id="map" class="col-md-10"></div>
+
+    </div>
+    <script src="src/js/app.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnoXJvg7ZWAHehBlNtYsXs10jWU901CCQ&callback=initMap"></script>
+
+</body>
+</html>
