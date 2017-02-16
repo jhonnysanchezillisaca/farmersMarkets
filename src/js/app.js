@@ -1,18 +1,7 @@
 'use strict';
 
-var map;
 var lastOpenInfoWindow;
 
-/**
-* Initializes the map and sets the defult center and the default zoom
-**/
-function initMap() {
-    var seattle = {lat: 47.642146, lng: -122.400694};
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: seattle,
-        zoom: 10
-    });
-}
 
 /**
 * Attachs a infowindow to a marker and sets a click listener in the marker to
