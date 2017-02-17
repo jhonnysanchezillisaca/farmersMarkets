@@ -158,5 +158,6 @@ search: function(value) {
 // SimpleListModel.query.subscribe(SimpleListModel.search);
 simpleListModel.query.subscribe(simpleListModel.search);
 
-
 ko.applyBindings(simpleListModel);
+
+console.log(Object.keys(simpleListModel.wikipediaArticles()).length);

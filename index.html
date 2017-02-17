@@ -32,7 +32,7 @@
                 </ul>
             </div>
 
-            <div id="wikipediaArticles">
+            <div id="wikipediaArticles" data-bind="visible: wikipediaArticles().length > 0">
                 <h5>Wikipedia Articles:</h5>
                 <ul data-bind="foreach: wikipediaArticles">
                     <a data-bind="attr: {href: url}"><li data-bind="text: title"></li></a>
