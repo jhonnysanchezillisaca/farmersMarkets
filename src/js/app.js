@@ -24,9 +24,40 @@ function attachMessage(marker, message) {
 
         // Animation
         setAnimationWithTimeout(marker);
+
+        // Make geo query wikipedia
+        makeWikipediaGEORequest(marker.position.lat(), marker.position.lng());
     });
     return infowindow;
 }
+
+function makeWikipediaGEORequest(latitude, longitude) {
+    var wikipediaURL = 'https://en.wikipedia.org/w/api.php?';
+    var wikipediaURLToQuery = wikipediaURL + 'action=query&format=json&list=geosearch&gscoord=' + latitude + '%7C' + longitude + '&gsradius=10000&gslimit=10';
+
+    // Set timeout in case wikipedia response doesn't work
+    var wikiRequestTimeout = setTimeout(function(){
+        $('#wikipediaArticles').text('Failed to get wikipedia resources');
+    }, 8000);
+
+    var wikipediaResponse = $.ajax({
+        url: wikipediaURLToQuery,
+        dataType: 'jsonp'
+    }).done(function(data) {
+        simpleListModel.wikipediaArticles.removeAll();
+        for (var entry in data.query.geosearch) {
+            simpleListModel.wikipediaArticles.push({url: 'http://en.wikipedia.org/?curid=' + data.query.geosearch[entry].pageid,
+                title: data.query.geosearch[entry].title});
+            console.log(data.query.geosearch[entry].title);
+        }
+        // Stop the timeout that is set to set an error in wikipedia response
+        clearTimeout(wikiRequestTimeout);
+        console.log(simpleListModel.wikipediaArticles());
+    })
+    // $('#wikipedia-links').append(entries.join(" "));
+
+}
+
 
 /**
 * Attach a bouncing animation to the marker. The marker bounces for 2117ms.
@@ -42,10 +73,11 @@ function setAnimationWithTimeout(marker) {
 
 /**
 * Shows the infowindow of a location and closes the previous open infowindow,
-* if it exists. Also sets an animation to the marker.
+* if it exists. Also sets an animation to the marker and
 * @param {Object} location The location object as stored in the model
 **/
-function showInfoWindowOfLocation(location) {
+function showInfoOfLocation(location) {
+    // Displays infowindow on marker
     if (null != lastOpenInfoWindow) {
         lastOpenInfoWindow.close();
     }
@@ -54,8 +86,14 @@ function showInfoWindowOfLocation(location) {
 
     // Animation of the marker
     setAnimationWithTimeout(location.location);
+
+    // Wikipedia Articles
+    makeWikipediaGEORequest(location.location.position.lat(),
+                            location.location.position.lng());
+
 }
 
+var wikipediaArticles = [];
 
 var locations = [];
 
@@ -91,6 +129,7 @@ $.ajax({
 
 var simpleListModel =  {
 items: ko.observableArray([]),
+wikipediaArticles: ko.observableArray([]),
 query: ko.observable(''),
 search: function(value) {
     simpleListModel.items.removeAll();
