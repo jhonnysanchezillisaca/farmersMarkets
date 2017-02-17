@@ -1,0 +1,25 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ddd;
+    li {
+        padding: 6px 12px;
+        border-bottom: 1px solid #ddd;
+
+        :last-child {
+            border-bottom: none
+        }
+    }
+}
+
+#map {
+    height: 100vh;
+}
+
+#search {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    
+}

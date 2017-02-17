@@ -21,16 +21,19 @@
 </head>
 <body>
     <div class="row">
-        <div class='liveExample col-md-2'>
+        <div class='col-md-2 lists'>
             <form>
                 <input id="search" type="search" name="search" placeholder="Search for a location" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
             </form>
-            <p>Your items:</p>
-            <ul data-bind="foreach: items">
-                <li data-bind="text: name, click: showInfoOfLocation"></li>
-            </ul>
+            <div id="markets">
+                <h5>Farmers Markets:</h5>
+                <ul data-bind="foreach: items">
+                    <li data-bind="text: name, click: showInfoOfLocation"></li>
+                </ul>
+            </div>
+
             <div id="wikipediaArticles">
-                <p>Wikipedia Articles:</p>
+                <h5>Wikipedia Articles:</h5>
                 <ul data-bind="foreach: wikipediaArticles">
                     <a data-bind="attr: {href: url}"><li data-bind="text: title"></li></a>
                 </ul>

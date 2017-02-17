@@ -12,8 +12,7 @@ var lastOpenInfoWindow;
 **/
 function attachMessage(marker, message) {
     var infowindow = new google.maps.InfoWindow({
-        content: message
-    });
+        content: message});
     // Closes the last opened infowindow automatically
     marker.addListener('click', function() {
         if (null != lastOpenInfoWindow) {
@@ -33,29 +32,27 @@ function attachMessage(marker, message) {
 
 function makeWikipediaGEORequest(latitude, longitude) {
     var wikipediaURL = 'https://en.wikipedia.org/w/api.php?';
-    var wikipediaURLToQuery = wikipediaURL + 'action=query&format=json&list=geosearch&gscoord=' + latitude + '%7C' + longitude + '&gsradius=10000&gslimit=10';
+    var wikipediaURLToQuery = wikipediaURL +
+        'action=query&format=json&list=geosearch&gscoord='
+        + latitude + '%7C' + longitude + '&gsradius=10000&gslimit=10';
 
     // Set timeout in case wikipedia response doesn't work
     var wikiRequestTimeout = setTimeout(function(){
         $('#wikipediaArticles').text('Failed to get wikipedia resources');
     }, 8000);
 
-    var wikipediaResponse = $.ajax({
+    $.ajax({
         url: wikipediaURLToQuery,
-        dataType: 'jsonp'
-    }).done(function(data) {
+        dataType: 'jsonp'})
+        .done(function(data) {
         simpleListModel.wikipediaArticles.removeAll();
         for (var entry in data.query.geosearch) {
             simpleListModel.wikipediaArticles.push({url: 'http://en.wikipedia.org/?curid=' + data.query.geosearch[entry].pageid,
                 title: data.query.geosearch[entry].title});
-            console.log(data.query.geosearch[entry].title);
         }
         // Stop the timeout that is set to set an error in wikipedia response
         clearTimeout(wikiRequestTimeout);
-        console.log(simpleListModel.wikipediaArticles());
-    })
-    // $('#wikipedia-links').append(entries.join(" "));
-
+    });
 }
 
 
@@ -73,7 +70,7 @@ function setAnimationWithTimeout(marker) {
 
 /**
 * Shows the infowindow of a location and closes the previous open infowindow,
-* if it exists. Also sets an animation to the marker and
+* if it exists. Also sets an animation to the marker and gets wikipedia articles
 * @param {Object} location The location object as stored in the model
 **/
 function showInfoOfLocation(location) {
@@ -124,7 +121,10 @@ $.ajax({
         // Push to items to make the data visible on load
         simpleListModel.items.push(locations[market]);
         }
-});
+}).fail(function() {
+    $('#markets').text('Unable to load the data. Please try again later.');
+}
+);
 
 
 var simpleListModel =  {

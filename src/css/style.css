@@ -1,3 +1,15 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ddd; }
+  ul li {
+    padding: 6px 12px;
+    border-bottom: 1px solid #ddd; }
+    ul li :last-child {
+      border-bottom: none; }
+
 #map {
-  height: 100vh;
-}
+  height: 100vh; }
+
+#search {
+  width: 100%; }
