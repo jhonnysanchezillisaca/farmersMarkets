@@ -8,7 +8,7 @@ Farmers Markets Map is a web application that, in the present, displays the loca
 You can access the live version in https://jhonnysanchezillisaca.github.io/farmersMarkets/
 
 To run the application you can clone the project:
-`$ git clone https://github.com/jhonnysanchezillisaca/neighborhoodMap.git`
+`$ git clone https://github.com/jhonnysanchezillisaca/farmersMarkets.git`
 
 Or download and extract the zip in your computer.
 
