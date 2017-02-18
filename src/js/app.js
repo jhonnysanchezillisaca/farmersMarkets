@@ -8,8 +8,8 @@ var locations = [];
 
 
 /**
-* Attachs a infowindow to a marker and sets a click listener in the marker to
-* open the infowindow. Also sets an animation to the marker.
+* @description Attachs a infowindow to a marker and sets a click listener in
+* the marker toopen the infowindow. Also sets an animation to the marker.
 * @param {Marker} marker The google maps marker to associate with an infowindow
 * @param {String} message The message for the infowindow to display when opened
 * @return {InfoWindow} The infowindow object created
@@ -35,8 +35,8 @@ function attachMessage(marker, message) {
 }
 
 /**
-* Gets articles from wikipedia near a given location and push it to the
-* wikipediaArticles variable of the model
+* @description Gets articles from wikipedia near a given location and push it
+* to the wikipediaArticles variable of the model
 * @param {float} latitude Latitude of the location to search
 * @param {float} longitude Longitude of the location to search
 **/
@@ -56,10 +56,10 @@ function makeWikipediaGEORequest(latitude, longitude) {
         dataType: 'jsonp'})
         .done(function(data) {
         simpleListModel.wikipediaArticles.removeAll();
-        for (var entry in data.query.geosearch) {
-            simpleListModel.wikipediaArticles.push({url: 'http://en.wikipedia.org/?curid=' + data.query.geosearch[entry].pageid,
-                title: data.query.geosearch[entry].title});
-        }
+        data.query.geosearch.forEach(function(entry) {
+            simpleListModel.wikipediaArticles.push({url: 'http://en.wikipedia.org/?curid=' + entry.pageid,
+                title: entry.title});
+        });
         // Stop the timeout that is set to set an error in wikipedia response
         clearTimeout(wikiRequestTimeout);
     });
@@ -67,7 +67,8 @@ function makeWikipediaGEORequest(latitude, longitude) {
 
 
 /**
-* Attach a bouncing animation to the marker. The marker bounces for 2117ms.
+* @description Attach a bouncing animation to the marker. The marker bounces
+* for 2117ms.
 * @param {Marker} marker The marker to attach the bounce animation
 **/
 function setAnimationWithTimeout(marker) {
@@ -79,8 +80,9 @@ function setAnimationWithTimeout(marker) {
 
 
 /**
-* Shows the infowindow of a location and closes the previous open infowindow,
-* if it exists. Also sets an animation to the marker and gets wikipedia articles
+* @description Shows the infowindow of a location and closes the previous open
+* infowindow, if it exists. Also sets an animation to the marker and gets
+* wikipedia articles
 * @param {Object} location The location object as stored in the model
 **/
 function showInfoOfLocation(location) {
@@ -109,23 +111,23 @@ $.ajax({
         '$limit': 5000,
     },
 }).done(function(data) {
-    for (var market in data) {
+    for (var i = 0; i < data.length; i++) {
         var marker = new google.maps.Marker({
-            position: {lat: parseFloat(data[market].latitude),
-                lng: parseFloat(data[market].longitude)},
+            position: {lat: parseFloat(data[i].latitude),
+                lng: parseFloat(data[i].longitude)},
                 map: map});
-        var messageForInfowindow = '<h3>' + data[market].common_name +
-        '</h3><a href="' + data[market].website +
+        var messageForInfowindow = '<h3>' + data[i].common_name +
+        '</h3><a href="' + data[i].website +
         '">Website</a>';
         locations.push({
-            name: data[market].common_name,
-            address: data[market].address,
-            website: data[market].website,
+            name: data[i].common_name,
+            address: data[i].address,
+            website: data[i].website,
             location: marker,
             infowindow: attachMessage(marker, messageForInfowindow)});
 
         // Push to items to make the data visible on load
-        simpleListModel.items.push(locations[market]);
+        simpleListModel.items.push(locations[i]);
         }
 }).fail(function() {
     $('#markets').text('Unable to load the data. Please try again later.');
@@ -140,23 +142,23 @@ query: ko.observable(''),
 search: function(value) {
     simpleListModel.items.removeAll();
     if (value === '') {
-        for (var location in locations) {
-            if (locations[location].name.lenght > 0) {
-                locations[location].location.setMap(map);
-                simpleListModel.items.push(locations[locations]);
+        locations.forEach(function(location) {
+            if (location.name.lenght > 0) {
+                location.location.setMap(map);
+                simpleListModel.items.push(locations);
             }
-        }
+        });
     }
-    for(var location in locations) {
+    locations.forEach(function(location) {
         // Filters the locations by name and hides the marker from the map
-        if (locations[location].name.toLowerCase().indexOf(
+        if (location.name.toLowerCase().indexOf(
             value.toLowerCase()) >= 0) {
-                locations[location].location.setMap(map);
-                simpleListModel.items.push(locations[location]);
+                location.location.setMap(map);
+                simpleListModel.items.push(location);
             } else {
-                locations[location].location.setMap(null);
+                location.location.setMap(null);
             }
-        }
+    });
     },
 };
 
