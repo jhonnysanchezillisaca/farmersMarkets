@@ -2,6 +2,10 @@
 
 var lastOpenInfoWindow;
 
+var wikipediaArticles = [];
+
+var locations = [];
+
 
 /**
 * Attachs a infowindow to a marker and sets a click listener in the marker to
@@ -30,6 +34,12 @@ function attachMessage(marker, message) {
     return infowindow;
 }
 
+/**
+* Gets articles from wikipedia near a given location and push it to the
+* wikipediaArticles variable of the model
+* @param {float} latitude Latitude of the location to search
+* @param {float} longitude Longitude of the location to search
+**/
 function makeWikipediaGEORequest(latitude, longitude) {
     var wikipediaURL = 'https://en.wikipedia.org/w/api.php?';
     var wikipediaURLToQuery = wikipediaURL +
@@ -87,12 +97,8 @@ function showInfoOfLocation(location) {
     // Wikipedia Articles
     makeWikipediaGEORequest(location.location.position.lat(),
                             location.location.position.lng());
-
 }
 
-var wikipediaArticles = [];
-
-var locations = [];
 
 // Retrieves data of the Farmers Markets from Seattle and store them in
 // the model
@@ -155,9 +161,6 @@ search: function(value) {
 };
 
 
-// SimpleListModel.query.subscribe(SimpleListModel.search);
 simpleListModel.query.subscribe(simpleListModel.search);
 
 ko.applyBindings(simpleListModel);
-
-console.log(Object.keys(simpleListModel.wikipediaArticles()).length);

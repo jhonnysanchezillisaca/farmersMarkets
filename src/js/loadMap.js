@@ -1,6 +1,14 @@
 var map;
 
 /**
+* Checks is there's no error loading the map
+**/
+var mapError = setTimeout(function() {
+      $('#map').text('Couldn\'t load the map, please try again later');
+}, 5000);
+
+
+/**
 * Initializes the map and sets the defult center and the default zoom
 **/
 function initMap() {
@@ -9,4 +17,6 @@ function initMap() {
         center: seattle,
         zoom: 12
     });
+
+    clearTimeout(mapError);
 }
