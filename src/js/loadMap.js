@@ -1,4 +1,4 @@
-var map;
+var map, infowindow1;
 
 /**
 * Checks is there's no error loading the map
@@ -17,6 +17,7 @@ function initMap() {
         center: seattle,
         zoom: 12
     });
-
+    // Creates the infowindow global object
+    infowindow1 = new google.maps.InfoWindow({});
     clearTimeout(mapError);
 }

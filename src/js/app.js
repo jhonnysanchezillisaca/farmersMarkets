@@ -1,10 +1,8 @@
 'use strict';
 
-var lastOpenInfoWindow;
-
-var wikipediaArticles = [];
-
-var locations = [];
+var lastOpenInfoWindow,
+    wikipediaArticles = [],
+    locations = [];
 
 
 /**
@@ -14,24 +12,18 @@ var locations = [];
 * @param {String} message The message for the infowindow to display when opened
 * @return {InfoWindow} The infowindow object created
 **/
-function attachMessage(marker, message) {
-    var infowindow = new google.maps.InfoWindow({
-        content: message});
+function attachMessages(marker, message) {
     // Closes the last opened infowindow automatically
     marker.addListener('click', function() {
-        if (null != lastOpenInfoWindow) {
-            lastOpenInfoWindow.close();
-        }
-        infowindow.open(marker.get('map'), marker);
-        lastOpenInfoWindow = infowindow;
-
+        infowindow1.close();
+        infowindow1.setContent(message);
+        infowindow1.open(marker.get('map'), marker);
         // Animation
         setAnimationWithTimeout(marker);
 
         // Make geo query wikipedia
         makeWikipediaGEORequest(marker.position.lat(), marker.position.lng());
     });
-    return infowindow;
 }
 
 /**
@@ -81,17 +73,14 @@ function setAnimationWithTimeout(marker) {
 
 /**
 * @description Shows the infowindow of a location and closes the previous open
-* infowindow, if it exists. Also sets an animation to the marker and gets
+* infowindow. Also sets an animation to the marker and gets
 * wikipedia articles
 * @param {Object} location The location object as stored in the model
 **/
 function showInfoOfLocation(location) {
-    // Displays infowindow on marker
-    if (null != lastOpenInfoWindow) {
-        lastOpenInfoWindow.close();
-    }
-    location.infowindow.open(map, location.location);
-    lastOpenInfoWindow = location.infowindow;
+    infowindow1.close();
+    infowindow1.setContent(location.infoWMessage);
+    infowindow1.open(map, location.location);
 
     // Animation of the marker
     setAnimationWithTimeout(location.location);
@@ -112,19 +101,24 @@ $.ajax({
     },
 }).done(function(data) {
     for (var i = 0; i < data.length; i++) {
+        // Creates the marker
         var marker = new google.maps.Marker({
             position: {lat: parseFloat(data[i].latitude),
                 lng: parseFloat(data[i].longitude)},
                 map: map});
+        // Creates the message to show in the infowindow
         var messageForInfowindow = '<h3>' + data[i].common_name +
         '</h3><a href="' + data[i].website +
         '">Website</a>';
+        // Adds click event listener to the marker to show the infowindow
+        attachMessages(marker, messageForInfowindow);
+        // Adds the data to the model
         locations.push({
             name: data[i].common_name,
             address: data[i].address,
             website: data[i].website,
             location: marker,
-            infowindow: attachMessage(marker, messageForInfowindow)});
+            infoWMessage: messageForInfowindow});
 
         // Push to items to make the data visible on load
         simpleListModel.items.push(locations[i]);
