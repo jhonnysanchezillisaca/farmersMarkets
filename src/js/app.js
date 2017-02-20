@@ -67,7 +67,7 @@ function setAnimationWithTimeout(marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
         marker.setAnimation(null);
-    }, 1411);
+    }, 1400);
 }
 
 
@@ -125,34 +125,33 @@ $.ajax({
         }
 }).fail(function() {
     $('#markets').text('Unable to load the data. Please try again later.');
-}
+    }
 );
 
 
-var simpleListModel =  {
-items: ko.observableArray([]),
-wikipediaArticles: ko.observableArray([]),
-query: ko.observable(''),
-search: function(value) {
-    simpleListModel.items.removeAll();
-    if (value === '') {
+var simpleListModel = {
+    items: ko.observableArray([]),
+    wikipediaArticles: ko.observableArray([]),
+    query: ko.observable(''),
+    search: function(value) {
+        // Close the infowindow if it is open
+        infowindow1.close();
+        if (value === '') {
+            locations.forEach(function(location) {
+                if (location.name.lenght > 0) {
+                    location.location.setVisible(true);
+                }
+            });
+        }
         locations.forEach(function(location) {
-            if (location.name.lenght > 0) {
-                location.location.setMap(map);
-                simpleListModel.items.push(locations);
-            }
+            // Filters the locations by name and hides the marker from the map
+            if (location.name.toLowerCase().indexOf(
+                value.toLowerCase()) >= 0) {
+                    location.location.setVisible(true);
+                } else {
+                    location.location.setVisible(false);
+                }
         });
-    }
-    locations.forEach(function(location) {
-        // Filters the locations by name and hides the marker from the map
-        if (location.name.toLowerCase().indexOf(
-            value.toLowerCase()) >= 0) {
-                location.location.setMap(map);
-                simpleListModel.items.push(location);
-            } else {
-                location.location.setMap(null);
-            }
-    });
     },
 };
 

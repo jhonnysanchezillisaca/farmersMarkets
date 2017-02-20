@@ -18,8 +18,8 @@
 
 </head>
 <body>
-    <div class="main">
-        <div class="dropdown">
+    <main>
+        <nav class="dropdown">
             <form>
                 <input id="search" class="search" type="search" name="search" placeholder="Search for a location" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
             </form>
@@ -38,14 +38,14 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div id="map"></div>
+        </nav>
+        <section id="map"></section>
         <footer>Data provided by Wikipedia and data.seattle.gov</footer>
-    </div>
+</main>
 
     <script src="src/js/loadMap.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnoXJvg7ZWAHehBlNtYsXs10jWU901CCQ&callback=initMap"></script>
     <script src="src/js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnoXJvg7ZWAHehBlNtYsXs10jWU901CCQ&callback=initMap" async defer onerror="mapError()"></script>
 
 
 </body>

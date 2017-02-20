@@ -3,9 +3,9 @@ var map, infowindow1;
 /**
 * Checks is there's no error loading the map
 **/
-var mapError = setTimeout(function() {
-      $('#map').text('Couldn\'t load the map, please try again later');
-}, 5000);
+var mapError = function() {
+    $('#map').text('Couldn\'t load the map, please try again later');
+}
 
 
 /**
