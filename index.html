@@ -34,7 +34,7 @@
                 <div id="wikipediaArticles" data-bind="visible: wikipediaArticles().length > 0">
                     <h5>Wikipedia Articles:</h5>
                     <ul data-bind="foreach: wikipediaArticles">
-                        <a data-bind="attr: {href: url}"><li data-bind="text: title"></li></a>
+                        <li><a data-bind="text: title, attr: {href: url}"></a></li>
                     </ul>
                 </div>
             </div>
@@ -43,9 +43,10 @@
         <footer>Data provided by Wikipedia and data.seattle.gov</footer>
 </main>
 
-    <script src="src/js/loadMap.js"></script>
     <script src="src/js/app.js"></script>
+    <script src="src/js/loadMap.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnoXJvg7ZWAHehBlNtYsXs10jWU901CCQ&callback=initMap" async defer onerror="mapError()"></script>
+
 
 
 </body>
