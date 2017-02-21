@@ -6,20 +6,6 @@
 }
 
 .lists {
-    ul {
-        list-style-type: none;
-        padding: 0;
-        border: 1px solid #ddd;
-        li {
-            padding: 6px 12px;
-            border-bottom: 1px solid #ddd;
-
-            :last-child {
-                border-bottom: none
-            }
-        }
-    }
-
     display: none;
     position: absolute;
     max-height: 80vh;
@@ -28,13 +14,27 @@
     z-index: 1;
 }
 
+.list-btn {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ddd;
+    .item-btn {
+        padding: 6px 12px;
+        border-bottom: 1px solid #ddd;
+
+        :last-child {
+            border-bottom: none
+        }
+    }
+}
+
 .dropdown:hover .lists {
     display: block;
     background-color: white;
 }
 
 
-#map {
+.map {
     height: 100vh;
     margin-top: -2em;
 }

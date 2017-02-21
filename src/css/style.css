@@ -11,20 +11,21 @@
   min-width: 15vw;
   overflow: scroll;
   z-index: 1; }
-  .lists ul {
-    list-style-type: none;
-    padding: 0;
-    border: 1px solid #ddd; }
-    .lists ul li {
-      padding: 6px 12px;
-      border-bottom: 1px solid #ddd; }
-      .lists ul li :last-child {
-        border-bottom: none; }
+
+.list-btn {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ddd; }
+  .list-btn .item-btn {
+    padding: 6px 12px;
+    border-bottom: 1px solid #ddd; }
+    .list-btn .item-btn :last-child {
+      border-bottom: none; }
 
 .dropdown:hover .lists {
   display: block;
   background-color: white; }
 
-#map {
+.map {
   height: 100vh;
   margin-top: -2em; }

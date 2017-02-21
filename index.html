@@ -26,20 +26,20 @@
             <div class="lists">
                 <div id="markets">
                     <h5>Farmers Markets:</h5>
-                    <ul data-bind="foreach: items">
-                        <li data-bind="text: name, click: showInfoOfLocation"></li>
+                    <ul data-bind="foreach: items" class="list-btn">
+                        <li data-bind="text: name, click: showInfoOfLocation" class="item-btn"></li>
                     </ul>
                 </div>
 
                 <div id="wikipediaArticles" data-bind="visible: wikipediaArticles().length > 0">
                     <h5>Wikipedia Articles:</h5>
-                    <ul data-bind="foreach: wikipediaArticles">
-                        <li><a data-bind="text: title, attr: {href: url}"></a></li>
+                    <ul data-bind="foreach: wikipediaArticles" class="list-btn">
+                        <li class="item-btn"><a data-bind="text: title, attr: {href: url}"></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <section id="map"></section>
+        <section id="map" class="map"></section>
         <footer>Data provided by Wikipedia and data.seattle.gov</footer>
 </main>
 
