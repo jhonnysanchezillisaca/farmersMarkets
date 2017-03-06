@@ -2,7 +2,7 @@ Farmers Markets Map
 ============================
 
 ## Overview
-Farmers Markets Map is a web application that, in the present, displays the locations of the Farmers Markets of Seattle, providing links to the website of the market and Wikipedia's articles of places near the market.
+Farmers Markets Map is a single-page web application, built using the Knockout framework that, in the present, displays the locations of the Farmers Markets of Seattle, providing links to the website of the market and Wikipedia's articles of places near the market. Users can search all included landmarks and, when selected, additional information about a landmark is presented from the Wikimedia API.
 
 ## Installation and usage
 You can access the live version in https://jhonnysanchezillisaca.github.io/farmersMarkets/
